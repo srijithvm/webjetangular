@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Movie List</title>
+	<meta charset="utf-8" />
+    <script src="Scripts/angular.min.js"></script>
+    <script src="Scripts/angular-route.min.js"></script>
+    <script src="app/Module.js"></script>
+    <script src="Scripts/bootstrap.min.js"></script>
+    <link href="webJetStyleSheeet.css" rel="stylesheet" />
+</head>
+
+<body ng-app="MovieModule">
+    <div class="container" ng-controller="MovieController" ng-init="itemsInCart=0">
+        <header>
+            <h1>Movie Gallery</h1>
+            <h4 style="text-align:right;">Items in cart:{{itemsInCart}}</h4>
+        </header>
+        <div >
+            <h2 style="text-align:center;" ng-if="counter>0">Offer Ends in : {{counter | secondsToDateTime | date:'HH:mm:ss'}}</h2>
+        </div>
+        <div>
+            <h3 style="text-align:center;color:red">{{errorMessage}}</h3>
+        </div>
+        <div>
+            <table>
+                <tr ng-repeat="movie in AllMovies" ng-if="$index % 3 == 0" style="align-content:center">
+                    <td style="width:400px; height:400px;" ng-class="{highlight:hover}" ng-mouseenter="hover=true" ng-mouseleave="hover=false" align="center" ng-if="$index<AllMovies.length">
+                        <h4>{{AllMovies[$index].Title}}</h4>
+                        <img ng-src="{{AllMovies[$index].Poster}}" style="width:300px; height:300px" /><br />
+                        <p>Year : {{AllMovies[$index].Year}}</p>
+                        <p ng-class="{pricestrikethrough:AllMovies[$index].Price>AllMovies[$index].OfferPrice}">Price : ${{AllMovies[$index].Price}}</p>
+                        <p ng-if="AllMovies[$index].Price>AllMovies[$index].OfferPrice">Offer Price : ${{AllMovies[$index].OfferPrice}}</p>
+                        <input type="button" value="Add to Cart" ng-if="CheckInCart(AllMovies[$index])<0" ng-click="AddToCart(AllMovies[$index])" />
+                        <input type="button" value="Remove From Cart" ng-if="CheckInCart(AllMovies[$index])>-1" ng-click="RemoveFromCart(AllMovies[$index])" />
+                    </td>
+                    <td style="width:400px; height:400px;" ng-class="{highlight:hover}" ng-mouseenter="hover=true" ng-mouseleave="hover=false" align="center" ng-if="($index+1)<AllMovies.length">
+                        <h4>{{AllMovies[$index+1].Title}}</h4>
+                        <img ng-src="{{AllMovies[$index+1].Poster}}" style="width:300px; height:300px" /><br />
+                        <p>Year : {{AllMovies[$index+1].Year}}</p>
+                        <p ng-class="{pricestrikethrough:AllMovies[$index+1].Price>AllMovies[$index+1].OfferPrice}">Price : ${{AllMovies[$index+1].Price}}</p>
+                        <p ng-if="AllMovies[$index+1].Price>AllMovies[$index+1].OfferPrice" >Offer Price : ${{AllMovies[$index+1].OfferPrice}}</p>
+                        <input type="button" value="Add to Cart" ng-if="CheckInCart(AllMovies[$index+1])<0"  ng-click="AddToCart(AllMovies[$index+1])" />
+                        <input type="button" value="Remove From Cart" ng-if="CheckInCart(AllMovies[$index+1])>-1" ng-click="RemoveFromCart(AllMovies[$index+1])" />
+                    </td>
+                    <td style="width:400px; height:400px;" ng-class="{highlight:hover}" ng-mouseenter="hover=true" ng-mouseleave="hover=false" align="center" ng-if="($index+2)<AllMovies.length">
+                        <h4>{{AllMovies[$index+2].Title}}</h4>
+                        <img ng-src="{{AllMovies[$index+2].Poster}}" style="width:300px; height:300px" /><br />
+                        <p>Year : {{AllMovies[$index+2].Year}}</p>
+                        <p ng-class="{pricestrikethrough:AllMovies[$index+2].Price>AllMovies[$index+2].OfferPrice}">Price : ${{AllMovies[$index+2].Price}}</p>
+                        <p ng-if="AllMovies[$index+2].Price>AllMovies[$index+2].OfferPrice">Offer Price : ${{AllMovies[$index+2].OfferPrice}}</p>
+                        <input type="button" value="Add to Cart" ng-if="CheckInCart(AllMovies[$index+2])<0"  ng-click="AddToCart(AllMovies[$index+2])" />
+                        <input type="button" value="Remove From Cart" ng-if="CheckInCart(AllMovies[$index+2])>-1" ng-click="RemoveFromCart(AllMovies[$index+2])" />
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <footer>Copyright &copy; webjettest.com</footer>
+    </div>
+</body>
+</html>
